@@ -2,13 +2,6 @@
 Develop destop GUI application with following components and requirements
 
 1. Create database name PRJ321_YourID on MS SQL Server, have 1 table with at least 2 rows sample data
-Table name: Magazine_YourID
-Maz ID   | Magazine Title             | Publisher | Price |
----------|----------------------------|-------------------|
-M001     | Desktop Java Application   | IT House  | 12.5  |
----------|----------------------------|-----------|-------|
-M002     | Web programming with JSP   | Youth     | 8.9   |
----------|----------------------------|-----------|-------|
 
 2. Create desktop application in NetBean:
 a. Define Java Bean class link to table Magazine, add 2 following function:
