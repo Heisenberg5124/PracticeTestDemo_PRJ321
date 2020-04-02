@@ -2,7 +2,7 @@ package model;
 
 import java.io.Serializable;
 
-public class Magazine  implements Serializable {
+public class Magazine {
     private String mazID;
     private String mazTitle;
     private String publisher;

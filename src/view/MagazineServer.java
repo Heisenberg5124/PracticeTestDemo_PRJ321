@@ -6,26 +6,38 @@
 package view;
 
 import controller.MagazineController;
+import java.awt.HeadlessException;
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
 import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Magazine;
+import rmi.AllMagazines;
+import rmi.AllMagazines;
+import rmi.AllMagazinesImpl;
+import rmi.AllMagazinesImpl;
+import thread.CountdownThread;
 import validation.Validation;
 
 /**
  *
  * @author ADMIN
  */
-public class MagazineView extends javax.swing.JFrame {
+public class MagazineServer extends javax.swing.JFrame {
     MagazineController mazController = new MagazineController();
     Vector<String> header = new Vector<>();
     Vector data = new Vector();
     Validation validation = new Validation();
+    AllMagazines allMaz = allMaz = new AllMagazines();
+    AllMagazinesImpl allMazImpl;
 
     /**
      * Creates new form MagazineView
      */
-    public MagazineView() {
+    public MagazineServer() {
         initComponents();
         header.add("Magazine ID");
         header.add("Title");
@@ -63,7 +75,7 @@ public class MagazineView extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Magazine");
-        setPreferredSize(new java.awt.Dimension(600, 300));
+        setPreferredSize(new java.awt.Dimension(600, 400));
 
         pButton.setLayout(new java.awt.GridLayout(2, 1, 0, 20));
 
@@ -192,8 +204,10 @@ public class MagazineView extends javax.swing.JFrame {
                 Magazine magazine = mazController.getMagazine(mazID);
                 if (magazine == null) {
                     int n = mazController.newMagazine(mazID, title, publisher, price);
-                    if (n == 1)
+                    if (n == 1) {
                         getAll();
+                        allMaz.setAllMagazines(mazController.getAll());
+                    }
                     else
                         JOptionPane.showMessageDialog(this, "Add magazine failure!");
                 } else
@@ -214,7 +228,17 @@ public class MagazineView extends javax.swing.JFrame {
 
     private void btnStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartActionPerformed
         // TODO add your handling code here:
+        allMaz.setAllMagazines(mazController.getAll());
         
+        try {
+            allMazImpl = new AllMagazinesImpl(allMaz);
+            LocateRegistry.createRegistry(5001);
+            Naming.rebind("rmi://localhost:5001/MagazineServer", allMazImpl);
+            JOptionPane.showMessageDialog(this, "Server started!");
+            this.btnStart.setEnabled(false);
+        } catch (HeadlessException | MalformedURLException | RemoteException e) {
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_btnStartActionPerformed
 
     private void getAll() {
@@ -252,22 +276,27 @@ public class MagazineView extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MagazineView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MagazineServer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MagazineView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MagazineServer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MagazineView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MagazineServer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MagazineView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MagazineServer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MagazineView().setVisible(true);
+                new MagazineServer().setVisible(true);
             }
         });
+        
+        CountdownThread counter = new CountdownThread("Server");
+        Thread thread = new Thread(counter);
+        thread.start();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
