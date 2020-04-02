@@ -26,18 +26,17 @@ import validation.Validation;
  *
  * @author ADMIN
  */
-public class MagazineServer extends javax.swing.JFrame {
+public class MagazineView extends javax.swing.JFrame {
     MagazineController mazController = new MagazineController();
     Vector<String> header = new Vector<>();
     Vector data = new Vector();
     Validation validation = new Validation();
-    AllMagazines allMaz = allMaz = new AllMagazines();
-    AllMagazinesImpl allMazImpl;
+    AllMagazines allMaz = new AllMagazines();
 
     /**
      * Creates new form MagazineView
      */
-    public MagazineServer() {
+    public MagazineView() {
         initComponents();
         header.add("Magazine ID");
         header.add("Title");
@@ -65,7 +64,6 @@ public class MagazineServer extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         txtPrice = new javax.swing.JTextField();
         pBtn = new javax.swing.JPanel();
-        btnStart = new javax.swing.JButton();
         btnNew = new javax.swing.JButton();
         btnViewAll = new javax.swing.JButton();
         btnExit = new javax.swing.JButton();
@@ -75,7 +73,6 @@ public class MagazineServer extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Magazine");
-        setPreferredSize(new java.awt.Dimension(600, 400));
 
         pButton.setLayout(new java.awt.GridLayout(2, 1, 0, 20));
 
@@ -112,14 +109,6 @@ public class MagazineServer extends javax.swing.JFrame {
         java.awt.FlowLayout flowLayout1 = new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 50, 20);
         flowLayout1.setAlignOnBaseline(true);
         pBtn.setLayout(flowLayout1);
-
-        btnStart.setText("Start Server");
-        btnStart.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnStartActionPerformed(evt);
-            }
-        });
-        pBtn.add(btnStart);
 
         btnNew.setText("New");
         btnNew.addActionListener(new java.awt.event.ActionListener() {
@@ -226,21 +215,6 @@ public class MagazineServer extends javax.swing.JFrame {
         getAll();
     }//GEN-LAST:event_btnViewAllActionPerformed
 
-    private void btnStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartActionPerformed
-        // TODO add your handling code here:
-        allMaz.setAllMagazines(mazController.getAll());
-        
-        try {
-            allMazImpl = new AllMagazinesImpl(allMaz);
-            LocateRegistry.createRegistry(5001);
-            Naming.rebind("rmi://localhost:5001/MagazineServer", allMazImpl);
-            JOptionPane.showMessageDialog(this, "Server started!");
-            this.btnStart.setEnabled(false);
-        } catch (HeadlessException | MalformedURLException | RemoteException e) {
-            e.printStackTrace();
-        }
-    }//GEN-LAST:event_btnStartActionPerformed
-
     private void getAll() {
         data = mazController.getAll();
         
@@ -276,21 +250,23 @@ public class MagazineServer extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MagazineServer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MagazineView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MagazineServer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MagazineView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MagazineServer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MagazineView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MagazineServer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MagazineView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MagazineServer().setVisible(true);
+                new MagazineView().setVisible(true);
             }
         });
         
@@ -302,7 +278,6 @@ public class MagazineServer extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnNew;
-    private javax.swing.JButton btnStart;
     private javax.swing.JButton btnViewAll;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

@@ -5,7 +5,9 @@
         <group>
             <file>file:/D:/Heisenberg5124/FPT/Major/MAJOR3/PRJ311/PracticeTestDemo/src/rmi/IMagazine.java</file>
             <file>file:/D:/Heisenberg5124/FPT/Major/MAJOR3/PRJ311/PracticeTestDemo/src/thread/CountdownThread.java</file>
+            <file>file:/D:/Heisenberg5124/FPT/Major/MAJOR3/PRJ311/PracticeTestDemo/src/model/DatabaseInfo.java</file>
             <file>file:/D:/Heisenberg5124/FPT/Major/MAJOR3/PRJ311/PracticeTestDemo/src/rmi/AllMagazinesImpl.java</file>
+            <file>file:/D:/Heisenberg5124/FPT/Major/MAJOR3/PRJ311/PracticeTestDemo/src/model/ConnectDB.java</file>
             <file>file:/D:/Heisenberg5124/FPT/Major/MAJOR3/PRJ311/PracticeTestDemo/src/view/MagazineClient.java</file>
             <file>file:/D:/Heisenberg5124/FPT/Major/MAJOR3/PRJ311/PracticeTestDemo/src/view/MagazineServer.java</file>
             <file>file:/D:/Heisenberg5124/FPT/Major/MAJOR3/PRJ311/PracticeTestDemo/src/rmi/AllMagazines.java</file>
